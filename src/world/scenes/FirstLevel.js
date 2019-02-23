@@ -7,10 +7,8 @@ import { ASSET_PATHS, SPAWNERS } from '../../utils/Const.js'
 
 import PlayerCharacterData from '../../entities/characters/PlayerCharacterDefaultData.js'
 import ArcherData from '../../entities/characters/ArcherDefaultData.js'
-import MarriottData from '../../entities/characters/MarriottDefaultData.js'
 
 import MovementComponent from '../../entities/components/MovementComponent.js'
-import MarriottMovementComponent from '../../entities/components/MarriottMovementComponent.js'
 import PlayerInputComponent from '../../entities/components/PlayerInputComponent.js'
 import AnimationComponent from '../../entities/components/AnimationComponent.js'
 import SpawnerBehaviorComponent from '../../entities/components/SpawnerBehaviorComponent.js'
@@ -19,7 +17,6 @@ import AttributeComponent from '../../entities/components/AttributeComponent.js'
 import CombatComponent from '../../entities/components/CombatComponent.js'
 import SpawnerData from '../../entities/effects/SpawnerDefaultData.js'
 import EnemyInteractionComponent from '../../entities/components/InteractionComponent/EnemyInteractionComponent.js'
-import MarriottInteractionComponent from '../../entities/components/InteractionComponent/MarriottInteractionComponent.js'
 import Vector from '../../utils/Vector.js'
 import DoorInteractionComponent from '../../entities/components/InteractionComponent/DoorInteractionComponent.js'
 
@@ -137,7 +134,6 @@ export default class FirstLevel extends Scene {
         pc.addComponent(new AttributeComponent(pc, PlayerCharacterData.Attributes))
         pc.addComponent(new MovementComponent(pc, PlayerCharacterData.Attributes))
         pc.addComponent(new CollisionComponent(pc))
-        pc.addComponent(new MarriottInteractionComponent(pc))
         pc.addComponent(new CombatComponent(pc))
         pc.addComponent(new PlayerInputComponent(pc))
         return pc

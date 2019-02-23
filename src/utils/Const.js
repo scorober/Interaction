@@ -5,7 +5,6 @@ export const ASSET_PATHS = {
     Archer: './assets/img/archer.png',
     Robot: './assets/img/robot-full.png',
     Dungeon: './assets/img/dungeonColor3@64x64.png',
-    Marriott: './assets/img/marriott.png',
     Teleport: './assets/img/teleport.png',
     Background: './assets/img/background.jpg',
     Effect32: './assets/img/effects_y32.png',
@@ -80,12 +79,6 @@ export const ANIMATIONS = {
     AttackNorth: Symbol(),
     AttackSouth: Symbol(),
 
-    /** Marriott-specific animations */
-    SitDownWest: Symbol(),
-    SitDownEast: Symbol(),
-    StandUpWest: Symbol(),
-    StandUpEast: Symbol(),
-
     /** Mage-specific animations */
     PowerupWest: Symbol(),
     PowerupEast: Symbol(),
@@ -117,8 +110,6 @@ export const ANIMATION_RATES = {
     OversizeSlash: Symbol(),
     OversizeThrust: Symbol(),
 
-    /** Marriott-specific rates */
-    Sit: Symbol(),
 
     /** Mage-specific rate */
     Powerup: Symbol(),
