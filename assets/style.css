@@ -1,0 +1,26 @@
+html, body, div, canvas {
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
+    background: #000000;
+    position: fixed;
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: pixelated;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+/*
+    To add new fonts, download a .ttf file like this and in game just set this.ctx.font = '<font-family-name>'
+ */
+@font-face {
+    font-family: 'arcade';
+    src: url("./font/ArcadeAlternate.ttf");
+}

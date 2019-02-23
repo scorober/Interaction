@@ -1,0 +1,22 @@
+{
+  "name": "drmarriott",
+  "version": "1.0.0",
+  "description": "# Set up Set up instructions",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evigold/The-Untitled-Adventures.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Evigold/The-Untitled-Adventures/issues"
+  },
+  "homepage": "https://github.com/Evigold/The-Untitled-Adventures#readme",
+  "devDependencies": {
+    "eslint": "^5.12.1"
+  }
+}
