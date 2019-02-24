@@ -451,7 +451,6 @@ export default class Map extends Entity {
     }
 
     getRoomCenter(idx) {
-        console.log(idx)
         const room = this.getRoom(idx)
         return new Vector(
             room.global_pos(room.get_center_pos())[0],

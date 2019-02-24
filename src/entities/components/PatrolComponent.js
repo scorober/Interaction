@@ -32,7 +32,7 @@ export default class PatrolComponent extends Component {
 
     setPatrol() {
         this.targetTile = this.getNewRoom()
-        // this.entity.getComponent(MovementComponent).setPathfindingTarget(this.targetTile)
+        this.entity.getComponent(MovementComponent).setPathfindingTarget(this.targetTile)
     }
 
     getTile() {
