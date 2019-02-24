@@ -46,6 +46,7 @@ export default class CollisionComponent extends Component {
      */
     setCollidableHitbox() {
         this.entity.states[STATES.Collidable] = true
+        // console.log(this.animationComponent.getCurrentAnimation())
         const animation = this.animationComponent.getCurrentAnimation()
         const width = animation.getWidth()
         const height = animation.getHeight()

@@ -2,6 +2,7 @@ import Entity from '../entities/Entity.js'
 import Array2D from '../utils/Array2d.js'
 import { MAP_ITEMS as MI, ROOMS, RIGHT, LEFT, TOP, BOTTOM, TILE_COLLISION as TC, STATES } from '../utils/Const.js'
 import Vector from '../utils/Vector.js'
+import Random from '../utils/Random.js'
 
 export default class Map extends Entity {
     /**
@@ -22,9 +23,9 @@ export default class Map extends Entity {
         this.cols = dungeon.size[0]
         this.tiles = []
         this.scene = scene
-        this.spawners = [] //Array of spawner positions and radii.
         this.exits = [] //Array of door positions and room they enter.
         this.rooms = []
+        this.rng = new Random()
         this.buildMap()
     }
 
@@ -153,14 +154,6 @@ export default class Map extends Entity {
                 break
             case ROOMS.Any:
                 this.createObject(this.map1, this.alterPos(center, -1, -1), MI.Rug)
-                this.spawners.push({
-                    pos: new Vector(
-                        center[0] * this.tileSize,
-                        center[1] * this.tileSize
-                    ),
-                    r: this.getRadius(piece),
-                    room: piece.id
-                })
                 break
             case ROOMS.Treasure:
                 this.createObject(this.map1, center, MI.ChestOpen)
@@ -189,7 +182,6 @@ export default class Map extends Entity {
                 if (exit[1] === TOP) {
                     const doorPos = this.alterPos(piece.global_pos(exit[0]), -1, 1)
                     this.createObject(this.map1, doorPos, MI.Door0)
-                    this.createObject(this.map2, this.alterPos(doorPos, 0, 1), MI.Lock0)
                     this.createObject(this.map3, doorPos, MI.Door0Top)
                     tiles.push(this.alterPos(doorPos, 1, 1))
                     tiles.push(this.alterPos(doorPos, 2, 1))
@@ -197,11 +189,9 @@ export default class Map extends Entity {
                 } else {
                     const doorPos = this.alterPos(piece.global_pos(exit[0]), -1, -2)
                     this.createObject(this.map1, doorPos, MI.Door180)
-                    this.createObject(this.map2, doorPos, MI.Lock180)
                     this.createObject(this.map3, doorPos, MI.Door180Top)
                     tiles.push(this.alterPos(doorPos, 1, 0))
                     tiles.push(this.alterPos(doorPos, 2, 0))
-                    this.addExit(exit[2].id, piece.id, tiles)
                 }
             } else {  //East and West
                 const transPos = this.alterPos(exitPos, -2, 0)
@@ -209,20 +199,16 @@ export default class Map extends Entity {
                 if (exit[1] === RIGHT) {
                     const doorPos = this.alterPos(exitPos, 1, -1)
                     this.createObject(this.map1, doorPos, MI.Door90)
-                    this.createObject(this.map2, this.alterPos(doorPos, 1, 0), MI.Lock90)
                     this.createObject(this.map3, doorPos, MI.Door90Top)
                     tiles.push(this.alterPos(doorPos, 1, 1))
                     tiles.push(this.alterPos(doorPos, 1, 2))
-                    this.addExit(exit[2].id, piece.id, tiles)
                 }
                 if (exit[1] === LEFT) {
                     const doorPos = this.alterPos(piece.global_pos(exit[0]), -2, -1)
                     this.createObject(this.map1, doorPos, MI.Door270)
-                    this.createObject(this.map2, doorPos, MI.Lock270)
                     this.createObject(this.map3, doorPos, MI.Door270Top)
                     tiles.push(this.alterPos(doorPos, 0, 1))
                     tiles.push(this.alterPos(doorPos, 0, 2))
-                    this.addExit(exit[2].id, piece.id, tiles)
                 }
             }
         }
@@ -464,5 +450,22 @@ export default class Map extends Entity {
         return this.rooms[id - 1]
     }
 
+    getRoomCenter(idx) {
+        console.log(idx)
+        const room = this.getRoom(idx)
+        return new Vector(
+            room.global_pos(room.get_center_pos())[0],
+            room.global_pos(room.get_center_pos())[1]
+        )
+       
+    }
 
+    getRandomRoom() {
+        return this.rng.int(2, this.rooms.length)
+    }
+
+    static checkSameTile(tile0, tile1) {
+        return tile0.x === tile1.x && tile0.y === tile1.y
+
+    }
 }

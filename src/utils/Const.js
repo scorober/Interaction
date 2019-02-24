@@ -8,12 +8,9 @@ export const ASSET_PATHS = {
     Teleport: './assets/img/teleport.png',
     Background: './assets/img/background.jpg',
     Effect32: './assets/img/effects_y32.png',
-    TitleAnimation: './assets/img/animated_title_bg.png',
-    Spawner: './assets/img/vending.png',
 
     ScottsChar: './assets/img/scotts-char.png',
     Fireball: './assets/img/fireball.png',
-    Skeleton: './assets/img/skeleton_base.png',
     MageEffects: './assets/img/mageEffects.png',
     MapEffects: './assets/img/mapEffects.png',
     ArcherEffects: './assets/img/archerEffects.png',
@@ -83,10 +80,6 @@ export const ANIMATIONS = {
     PowerupWest: Symbol(),
     PowerupEast: Symbol(),
 
-    /** Spawner specific */
-    Crashed: Symbol(),
-    Static: Symbol(),
-
     /** Spell/effect specific animations. */
     Fire: Symbol(),
     Projectile: Symbol(),
@@ -118,9 +111,6 @@ export const ANIMATION_RATES = {
     Boost: Symbol(),
     Projectile: Symbol(),
     Impact: Symbol(),
-
-    /** Spawner specific rate */
-    Console: Symbol()
 }
 
 export const DIRECTIONS = {
@@ -232,23 +222,6 @@ export const KEYS = {
     NumpadDecimal: 'NumpadDecimal',
 }
 
-export const SPAWNERS = {
-    Mage: {
-        mage: .60,
-        archer: .10,
-        robot: .30
-    },
-    Archer: {
-        mage: .10,
-        archer: .60,
-        robot: .30
-    },
-    Robot: {
-        mage: 20,
-        archer: 15,
-        robot: 65
-    }
-}
 
 export const MAP_ITEMS = {
     Rug: [[110, 111, 112], [126, 127, 128], [142, 143, 144]],

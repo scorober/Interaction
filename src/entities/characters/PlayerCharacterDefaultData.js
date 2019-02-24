@@ -24,7 +24,7 @@ export default {
         Matk: 10,
         Def: 25,
         Mdef: 25,
-        Speed: 180,
+        Speed: 500,
         Name: 'PLAYER',
         isCombat : true
     },
