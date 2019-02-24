@@ -103,6 +103,7 @@ export default class PlayerInputComponent extends Component {
             fireball.addComponent(new ProjectileBehaviorComponent(fireball, target, true))
             this.entity.game.sceneManager.currentScene.addEntity(fireball)
             this.coolDown = 0
+            console.log(this.entity.game.sceneManager.currentScene.getNearbyEnemies(this.entity, 500))
         }
         if (this.entity.game.inputManager.downKeys[KEYS.KeyR]) {
             const origin = this.getEffectOffsetPos()
@@ -113,6 +114,8 @@ export default class PlayerInputComponent extends Component {
             lightningEffect.addComponent(new LightningBehaviorComponent(lightningEffect, target))
             this.entity.game.sceneManager.currentScene.addEntity(lightningEffect)
             this.coolDown = 0
+            const pos = Map.worldToTilePosition(target, 64)
+            console.log(this.entity.game.sceneManager.currentScene.map.getRoomByTile(pos))
         }
         if (this.entity.game.inputManager.downKeys[KEYS.KeyT]) {
             const target = this.getTarget()

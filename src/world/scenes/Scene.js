@@ -1,3 +1,4 @@
+import Vector from '../../utils/Vector.js'
 /**
  * Basic scene object most other scenes will extend.
  */
@@ -119,7 +120,11 @@ export default class Scene {
                     this.removeEntity(i)
                 } else {
                     entity.update()
+                    // if (this.checkEnemy(entity.UUID)) {
+                    //     this.map.updateSafeRooms(entity)
+                    // }
                 }
+                
             }
         }
 
@@ -171,14 +176,39 @@ export default class Scene {
         this.dungeon = dungeon
     }
 
+    /**
+     * Sets stage to swarm.
+     */
     setSwarmed() {
         this.swarm = true
         this.pacified = false
     }
     
+    /**
+     * Sets stage to pacified.
+     */
     setPacified() {
         this.pacified = true
         this.swarm = false
+    }
+
+    /**
+     * Check if entity is an enemy.
+     * @param {String} str 
+     */
+    checkEnemy(str) {
+        return str.includes('MAGE') || str.includes('ARCHER') || str.includes('ROBOT')
+    }
+
+    /**
+     * Search for nearby enemies within a line of sight.
+     * @param {Entity} entity Friendly entity.
+     * @param {Number} los Distance this mob can see.
+     */
+    getNearbyEnemies(entity, los) {
+        return this.entities.filter(e => (e.UUID !== entity.UUID) 
+            && (Vector.vectorFromEntity(entity).distance(Vector.vectorFromEntity(e))) <= los
+            && this.checkEnemy(e.UUID))
     }
 
 }

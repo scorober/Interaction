@@ -2,7 +2,6 @@
  * Scene manager saves all of the game scenes, and calls the correct one.
  */
 import FirstLevel from './world/scenes/FirstLevel.js'
-import TitleMenuScene from './world/scenes/TitleMenu.js'
 import { HitCircle, CollisionLayer } from './utils/Collision.js'
 import CollisionComponent from './entities/components/CollisionComponent.js'
 
@@ -19,9 +18,7 @@ export default class SceneManager {
         this.game = game
         this.collisionLayer = new CollisionLayer()
         const firstlevel = new FirstLevel(game)
-        const title = new TitleMenuScene(game)
         this.addScene(firstlevel.name, firstlevel)
-        this.addScene(title.name, title)
         this.currentScene = firstlevel
     }
 
