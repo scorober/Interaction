@@ -25,6 +25,7 @@ export default class Map extends Entity {
         this.scene = scene
         this.exits = [] //Array of door positions and room they enter.
         this.rooms = []
+        this.safeRooms = []
         this.rng = new Random()
         this.buildMap()
     }
@@ -450,8 +451,12 @@ export default class Map extends Entity {
         return this.rooms[id - 1]
     }
 
-    getRoomCenter(idx) {
-        const room = this.getRoom(idx)
+    /**
+     * Get the center tile of a room.
+     * @param {Number} id Id of room to find center of.  
+     */
+    getRoomCenter(id) {
+        const room = this.getRoom(id)
         return new Vector(
             room.global_pos(room.get_center_pos())[0],
             room.global_pos(room.get_center_pos())[1]
@@ -459,12 +464,44 @@ export default class Map extends Entity {
        
     }
 
+    /**
+     * Returns a random int id out of all but initial room.
+     */
     getRandomRoom() {
         return this.rng.int(2, this.rooms.length)
     }
 
+    /**
+     * Checks if two tiles are the same...
+     * TODO use vector equals...
+     * @param {Vector} tile0 
+     * @param {Vector} tile1 
+     */
     static checkSameTile(tile0, tile1) {
         return tile0.x === tile1.x && tile0.y === tile1.y
 
+    }
+
+
+    /**
+     * Gets the room ID based on the position of a tile.
+     * @param {Vector} tile Tile to be checked.
+     */
+    getRoomByTile(tile) {
+        // const pos = Map.worldToTilePosition(Vector.vectorFromEntity(entity), this.tileSize)
+        for (let i = 0; i < this.rooms.length; i++) {
+            const x0 = this.rooms[i].position[0]
+            const x1 = x0 + this.rooms[i].size[0]
+            const y0 = this.rooms[i].position[1]
+            const y1 = y0 + this.rooms[i].size[1]
+            if (tile.x >= x0 && tile.x <= x1 && tile.y >= y0 && tile.y <= y1) {
+                return this.rooms[i]
+            }
+        }
+    }
+
+    
+    getTile(entity) {
+        return  Map.worldToTilePosition(Vector.vectorFromEntity(entity), 64)
     }
 }

@@ -18,6 +18,8 @@ import CombatComponent from '../../entities/components/CombatComponent.js'
 import EnemyInteractionComponent from '../../entities/components/InteractionComponent/EnemyInteractionComponent.js'
 import Vector from '../../utils/Vector.js'
 import PatrolComponent from '../../entities/components/PatrolComponent.js';
+import MageData from '../../entities/characters/MageDefaultData.js';
+import EscapeComponent from '../../entities/components/EscapeComponent.js';
 
 export default class FirstLevel extends Scene {
     constructor(game) {
@@ -32,7 +34,7 @@ export default class FirstLevel extends Scene {
                     min_size: [12, 12], //Floor size
                     max_size: [12, 12],
                     max_exits: 4,
-                    position: [100, 100] //OPTIONAL pos of initial room 
+
                 },
                 any: {
                     min_size: [15, 15],
@@ -56,6 +58,7 @@ export default class FirstLevel extends Scene {
         })
 
         dungeon.generate()
+        dungeon.print()
 
         const map = new Map(game, game.getAsset(ASSET_PATHS.Dungeon), 64, 16, dungeon, this)
         this.setMap(map)
@@ -75,6 +78,23 @@ export default class FirstLevel extends Scene {
             const robot = this.createRobotPatroller(game, map)
             this.addEntity(robot)
         }
+
+        const mage = this.createEscapeArtist(game, start, map)
+        this.addEntity(mage)
+
+
+    }
+
+    createEscapeArtist(game, start, map) {
+        const mage = new Entity(game, start)
+        mage.addComponent(new AnimationComponent(mage, MageData.AnimationConfig))
+        mage.addComponent(new MovementComponent(mage, MageData.Attributes))
+        mage.addComponent(new AttributeComponent(mage, MageData.Attributes))
+        mage.addComponent(new CollisionComponent(mage, MageData.Attributes))
+        mage.addComponent(new EnemyInteractionComponent(mage))
+        mage.addComponent(new CombatComponent(mage))
+        mage.addComponent(new EscapeComponent(mage, map))
+        return mage
     }
 
     createRobotPatroller(game, map) {

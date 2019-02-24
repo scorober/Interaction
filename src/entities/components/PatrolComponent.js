@@ -9,20 +9,15 @@ export default class PatrolComponent extends Component {
         super(entity)
         this.rng = new Random()
         this.map = map
-        this.targetTile = this.getTile()
-        const currentTile = this.getTile()
+        this.targetTile = this.map.getTile(this.entity)
 
     }
 
     update() {
-        const currentTile = this.getTile()
+        const currentTile = this.map.getTile(this.entity)
         if (Map.checkSameTile(this.targetTile, currentTile)) {
             this.setPatrol()
         }
-    }
-
-    draw() {
-
     }
 
 
@@ -35,7 +30,4 @@ export default class PatrolComponent extends Component {
         this.entity.getComponent(MovementComponent).setPathfindingTarget(this.targetTile)
     }
 
-    getTile() {
-        return  Map.worldToTilePosition(Vector.vectorFromEntity(this.entity), 64)
-    }
 }
