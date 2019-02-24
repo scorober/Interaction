@@ -17,11 +17,10 @@ export default class EscapeComponent extends Component {
     }
 
     update() {
-        console.log('he')
         const currentTile = this.map.getTile(this.entity)
-        // if (Map.checkSameTile(this.targetTile, currentTile)) {
-        //     this.goToRoom(this.getNewRoom())
-        // }
+        if (Map.checkSameTile(this.targetTile, currentTile)) {
+            this.goToRoom(this.getNewRoom())
+        }
         if (!this.knownEnemies.includes(this.currentRoom)) {
             this.knownRooms.push(this.currentRoom)
         }
@@ -38,11 +37,16 @@ export default class EscapeComponent extends Component {
     }
 
     getNewRoom() {
-        let id
-        do {
-           id = this.entity.game.sceneManager.currentScene.map.getRandomRoom()
+
+        let id = this.map.getRandomRoom()
+        while (this.knownRooms.includes(id)) {
+            id = this.map.getRandomRoom()
         }
-        while (!this.knownRooms.includes(id)) 
+
+        // do {
+        //    id = this.entity.game.sceneManager.currentScene.map.getRandomRoom()
+        // }
+        // while (!this.knownRooms.includes(id)) 
         return id
     }
 

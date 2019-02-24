@@ -11,7 +11,8 @@ import {
 const attackWidth = 384
 const attackHeight = 192
 const height = 192
-const yOffset = 5
+const width = 192
+const yOffset = 20
 
 
 /** 
@@ -44,16 +45,15 @@ export default {
         Spritesheet: ASSET_PATHS.Mage,
         InitialAnimation: ANIMS.StandEast,
         AnimationRates: {
-            [AR.Walk]: 0.06,
-            [AR.Stand]: 0.12,
-            [AR.Impact]: 0.15,
+            [AR.Walk]: 0.04,
+            [AR.Stand]: 0.6,
             [AR.Attack]: 0.15,
-            [AR.Powerup]: 0.15,
+            [AR.Impact]: 0.1
         },
         AnimationData: {
             [ANIMS.AttackWest]: {
                 frames: 17,
-                rate: AR.Attack,
+                rate: AR.Shoot,
                 options: {
                     yOffset: yOffset,
                     width: attackWidth,
@@ -62,29 +62,29 @@ export default {
             },
             [ANIMS.AttackEast]: {
                 frames: 17,
-                rate: AR.Attack,
+                rate: AR.Shoot,
                 options: {
                     yOffset: yOffset,
                     width: attackWidth,
                     height: attackHeight
                 }
             },
-            // Copy of AttackWest
+            // Copy of ShootWest
             [ANIMS.AttackNorth]: {
                 frames: 17,
                 goBackRows: 2,
                 goBackHeight: 2 * attackHeight,
-                rate: AR.Attack,
+                rate: AR.Shoot,
                 options: {
                     yOffset: yOffset,
                     width: attackWidth,
                     height: attackHeight
                 }
             },
-            // Copy of AttackEast
+            // Copy of ShootEast
             [ANIMS.AttackSouth]: {
                 frames: 17,
-                rate: AR.Attack,
+                rate: AR.Shoot,
                 options: {
                     yOffset: yOffset,
                     width: attackWidth,
@@ -110,7 +110,7 @@ export default {
             [ANIMS.StandNorth]: {
                 frames: 10,
                 goBackRows: 2,
-                goBackHeight: 2,
+                goBackHeight: 2 * height,
                 rate: AR.Stand,
                 options: {
                     yOffset: yOffset,
@@ -123,6 +123,7 @@ export default {
                 options: {
                     yOffset: yOffset,
                 }
+
             },
             // Impact
             [ANIMS.Impact]: {
@@ -130,23 +131,39 @@ export default {
                 rate: AR.Impact,
                 options: {
                     loop: false,
-                    yOffset: yOffset,
+                    maxFrames: 12
                 }
             },
-            // Power-up
+            //Mage Power-UP
             [ANIMS.PowerupWest]: {
                 frames: 17,
-                rate: AR.Powerup,
+                rate: AR.Shoot,
                 options: {
-                    loop: false,
                     yOffset: yOffset,
                 }
             },
             [ANIMS.PowerupEast]: {
                 frames: 17,
-                rate: AR.Powerup,
+                rate: AR.Shoot,
                 options: {
-                    loop: false,
+                    yOffset: yOffset,
+                }
+            },
+            // Copy of ShootWest
+            [ANIMS.PowerupNorth]: {
+                frames: 17,
+                goBackRows: 2,
+                goBackHeight: 2 * attackHeight,
+                rate: AR.Shoot,
+                options: {
+                    yOffset: yOffset,
+                }
+            },
+            // Copy of ShootEast
+            [ANIMS.PowerupSouth]: {
+                frames: 17,
+                rate: AR.Shoot,
+                options: {
                     yOffset: yOffset,
                 }
             },
@@ -178,6 +195,8 @@ export default {
             // Copy of WalkEast
             [ANIMS.WalkNorth]: {
                 frames: 8,
+                width: width,
+                height: height,
                 rate: AR.Walk,
                 options: {
                     yOffset: yOffset,
