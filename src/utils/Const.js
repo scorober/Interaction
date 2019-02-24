@@ -79,6 +79,8 @@ export const ANIMATIONS = {
     /** Mage-specific animations */
     PowerupWest: Symbol(),
     PowerupEast: Symbol(),
+    PowerupNorth: Symbol(),
+    PowerupSouth: Symbol(),
 
     /** Spell/effect specific animations. */
     Fire: Symbol(),
