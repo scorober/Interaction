@@ -45,7 +45,7 @@ export default {
         Spritesheet: ASSET_PATHS.Mage,
         InitialAnimation: ANIMS.StandEast,
         AnimationRates: {
-            [AR.Walk]: 0.04,
+            [AR.Walk]: 0.09,
             [AR.Stand]: 0.6,
             [AR.Attack]: 0.15,
             [AR.Impact]: 0.1

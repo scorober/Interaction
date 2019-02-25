@@ -1,16 +1,19 @@
 import Component from './Component.js'
 import AnimationComponent from './AnimationComponent.js'
 import { ANIMATIONS as ANIMS } from '../../utils/Const.js'
+import Vector from '../../utils/Vector.js'
+import Map from '../../world/Map.js'
 
 export class TeleportBehaviorComponent extends Component {
     constructor(entity, targetEntity, target) {
         super(entity)
-        this.target = target
         this.targetEntity = targetEntity
+        this.target = target
         this.targetEntity.getComponent(AnimationComponent).getCurrentAnimation().setDraw(false)
+        if (!this.checkValidTarget()) {
+            this.target = Vector.vectorFromEntity(targetEntity)
+        }
         this.setTelportAnims()
-
-     
     }
 
     setTelportAnims() {
@@ -19,7 +22,6 @@ export class TeleportBehaviorComponent extends Component {
             this.entity.x = this.target.x                
             this.entity.y = this.target.y
             
-
             this.animComp.setAnimation(ANIMS.TeleportIn, () => {
                 this.targetEntity.x = this.target.x
                 this.targetEntity.y = this.target.y
@@ -31,6 +33,7 @@ export class TeleportBehaviorComponent extends Component {
     }
 
     checkValidTarget() {
-        return this.entity.game.getWorld()[this.target.x][this.target.y] <= 4
+        const checkTile = Map.worldToTilePosition(this.target, 64)
+        return this.entity.game.getWorld()[checkTile.y][checkTile.x] <= 4
     }
 }
