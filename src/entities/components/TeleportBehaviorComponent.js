@@ -7,8 +7,6 @@ export class TeleportBehaviorComponent extends Component {
         super(entity)
         this.target = target
         this.targetEntity = targetEntity
-        // console.log(        this.returnScale = this.targetEntity.getComponent(AnimationComponent).getCurrentAnimation().getScale())
-        // this.returnScale = this.targetEntity.getComponent(AnimationComponent).getCurrentAnimation().getScale()
         this.targetEntity.getComponent(AnimationComponent).getCurrentAnimation().setDraw(false)
         this.setTelportAnims()
 
@@ -30,5 +28,9 @@ export class TeleportBehaviorComponent extends Component {
                 this.entity.removeFromWorld = true
             })
         })
+    }
+
+    checkValidTarget() {
+        return this.entity.game.getWorld()[this.target.x][this.target.y] <= 4
     }
 }
