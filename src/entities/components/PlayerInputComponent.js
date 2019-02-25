@@ -9,6 +9,7 @@ import MageEffectData from '../effects/MageEffectDefaultData.js'
 import LightningData from '../effects/LightningEffectDefaultData.js'
 import FreezeData from '../effects/FreezeDefaultData.js'
 import ArcherEffectData from '../effects/ArcherEffectDefaultData.js'
+import TeleportEffectData from '../effects/TeleportDefaultData.js'
 import {
     KEYS,
     ANIMATIONS as ANIMS,
@@ -19,6 +20,7 @@ import FreezeBehaviorComponent from './FreezeBehaviorComponent.js'
 import CollisionComponent from './CollisionComponent.js'
 import InteractionComponent from './InteractionComponent/InteractionComponent.js'
 import Vector from '../../utils/Vector.js'
+import { TeleportBehaviorComponent } from './TeleportBehaviorComponent.js'
 
 export default class PlayerInputComponent extends Component {
     /**
@@ -131,6 +133,7 @@ export default class PlayerInputComponent extends Component {
      * Mapped all the current effects to player input keys for testing.
      */
     testSpells() {
+ 
         if (this.entity.game.inputManager.downKeys[KEYS.KeyW]) {
             const origin = this.getEffectOffsetPos()
             const target = this.getTarget()
@@ -149,6 +152,15 @@ export default class PlayerInputComponent extends Component {
             archerEffect.addComponent(new MovementComponent(archerEffect, ArcherEffectData.Attributes))
             archerEffect.addComponent(new ProjectileBehaviorComponent(archerEffect, target, false))
             this.entity.game.sceneManager.currentScene.addEntity(archerEffect)
+            this.coolDown = 0
+        }
+        if (this.entity.game.inputManager.downKeys[KEYS.KeyY]) {
+            const origin = this.getEffectOffsetPos()
+            const target = this.getTarget()
+            const teleportEffect = new Entity(this.entity.game, origin)
+            teleportEffect.addComponent(new AnimationComponent(teleportEffect, TeleportEffectData.AnimationConfig))
+            teleportEffect.addComponent(new TeleportBehaviorComponent(teleportEffect, this.entity, target))
+            this.entity.game.sceneManager.currentScene.addEntity(teleportEffect)
             this.coolDown = 0
         }
     }

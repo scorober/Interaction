@@ -120,9 +120,6 @@ export default class Scene {
                     this.removeEntity(i)
                 } else {
                     entity.update()
-                    // if (this.checkEnemy(entity.UUID)) {
-                    //     this.map.updateSafeRooms(entity)
-                    // }
                 }
                 
             }

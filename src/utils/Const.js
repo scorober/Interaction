@@ -90,7 +90,9 @@ export const ANIMATIONS = {
     Initial: Symbol(),
     Effect0: Symbol(),
     Effect1: Symbol(),
-    Effect2: Symbol()
+    Effect2: Symbol(),
+    TeleportIn: Symbol(),
+    TeleportOut: Symbol()
 }
 
 export const ANIMATION_RATES = {
@@ -113,6 +115,7 @@ export const ANIMATION_RATES = {
     Boost: Symbol(),
     Projectile: Symbol(),
     Impact: Symbol(),
+    Teleport: Symbol()
 }
 
 export const DIRECTIONS = {

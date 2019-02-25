@@ -1,7 +1,7 @@
 import Component from './Component.js'
 import Vector from '../../utils/Vector.js'
 import Random from '../../utils/Random.js'
-import MovementComponent from './MovementComponent.js';
+import MovementComponent from './MovementComponent.js'
 import Map from '../../world/Map.js'
 
 export default class EscapeComponent extends Component {
@@ -18,16 +18,21 @@ export default class EscapeComponent extends Component {
 
     update() {
         const currentTile = this.map.getTile(this.entity)
+        const nearEnemies = this.entity.game.sceneManager.currentScene.getNearbyEnemies(this.entity, 500)
         if (Map.checkSameTile(this.targetTile, currentTile)) {
             this.goToRoom(this.getNewRoom())
         }
         if (!this.knownEnemies.includes(this.currentRoom)) {
             this.knownRooms.push(this.currentRoom)
         }
-        // if (this.entity.game.sceneManager.currentScene.getNearbyEnemies.length > 0) {
-        //     this.goToRoom(this.getNewRoom())
-        //     //EXPAND HERE
-        // }
+        if (this.knownEnemies.length > 0) {
+            //Get direction vector based on all entities... go to a room in that direction!
+            console.log(this.knownEnemies === this.nearEnemies)
+        }
+        if (nearEnemies.length > 0) {
+            // this.goToRoom(this.getNewRoom())
+            this.knownEnemies = nearEnemies.slice()
+        }
 
     }
 

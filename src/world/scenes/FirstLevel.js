@@ -17,9 +17,9 @@ import AttributeComponent from '../../entities/components/AttributeComponent.js'
 import CombatComponent from '../../entities/components/CombatComponent.js'
 import EnemyInteractionComponent from '../../entities/components/InteractionComponent/EnemyInteractionComponent.js'
 import Vector from '../../utils/Vector.js'
-import PatrolComponent from '../../entities/components/PatrolComponent.js';
-import MageData from '../../entities/characters/MageDefaultData.js';
-import EscapeComponent from '../../entities/components/EscapeComponent.js';
+import PatrolComponent from '../../entities/components/PatrolComponent.js'
+import MageData from '../../entities/characters/MageDefaultData.js'
+import EscapeComponent from '../../entities/components/EscapeComponent.js'
 
 export default class FirstLevel extends Scene {
     constructor(game) {
@@ -58,7 +58,7 @@ export default class FirstLevel extends Scene {
         })
 
         dungeon.generate()
-        dungeon.print()
+        // dungeon.print()
 
         const map = new Map(game, game.getAsset(ASSET_PATHS.Dungeon), 64, 16, dungeon, this)
         this.setMap(map)
@@ -66,11 +66,11 @@ export default class FirstLevel extends Scene {
         const start = this.map.getStartPos()
 
         const playerCharacter = this.createPlayerCharacter(game, start)
-        const archer = this.createArcher(game, start, playerCharacter)
+        // const archer = this.createArcher(game, start, playerCharacter)
 
         this.setPlayer(playerCharacter)
         this.addEntity(playerCharacter)
-        this.addEntity(archer)
+        // this.addEntity(archer)
         this.addEntity(game.camera)
         this.game.camera.setFollowedEntity(playerCharacter)
 

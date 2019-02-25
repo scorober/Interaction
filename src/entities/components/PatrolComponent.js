@@ -2,7 +2,7 @@ import Component from './Component.js'
 import Random from '../../utils/Random.js'
 import Vector from '../../utils/Vector.js'
 import Map from '../../world/Map.js'
-import MovementComponent from './MovementComponent.js';
+import MovementComponent from './MovementComponent.js'
 
 export default class PatrolComponent extends Component {
     constructor(entity, map) {
