@@ -72,6 +72,7 @@ export default class SceneManager {
         if (this.game.inputManager.downKeys[KEYS.KeyC]) {
             console.log(this.game.camera)
         }
+        // console.log(this.currentScene)
     }
 
     /**
@@ -141,17 +142,18 @@ export default class SceneManager {
     load() {
         // var saveState
         const game = this.game
+        const self = this
         this.socket.on('load', function (data) {
             const saveState = data.data
             if (saveState) {
                 const level = new LoadLevel(game, saveState)
-                this.addScene = (level.name, level)
-                this.currentScene = level    
+                self.addScene = (level.name, level)
+                self.currentScene = level    
             }
             console.log(saveState)
         })
-        // console.log(this.socket.emit('load', { studentname: 'Scott Robertson', statename: 'gameState'}))
         this.socket.emit('load', { studentname: 'Scott Robertson', statename: 'gameState'})
+        console.log(this.currentScene)
 
     
     }

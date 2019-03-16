@@ -30,7 +30,7 @@ export default class LoadLevel extends Scene {
                 c.entity = entity
                 entity.addComponent(c)
             })
-            this.addEntity(entity)
+            this.entities.push(entity)
         }
     }
     createEscapeArtist(game, start, map) {
@@ -42,15 +42,12 @@ export default class LoadLevel extends Scene {
     }
 
     findMage() {
-        console.log(this.entities.length)
         for (let i = 0; i < this.entities.length; i++) {
             const e = this.entities[i]
             if (e.getComponent(EscapeComponent)) {
-                this.setCamera(e)
-
+                super.setCamera(e)
             }
         }
-        console.log(this.entities.length)
     }
 
     /**

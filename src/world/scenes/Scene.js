@@ -23,7 +23,6 @@ export default class Scene {
     setCamera(entity) {
         this.camera = new Camera(this.game)
         this.camera.setFollowedEntity(entity)
-        // console.log(this.camera)
         this.addEntity(this.camera)
     }
 
