@@ -150,11 +150,15 @@ export default class Scene {
                     y: entity.y,
                     removeFromWorld: entity.removeFromWorld,
                     states: entity.states,
-                    components: entity.components
+                    components: []
                 }
                 if (entity.getComponent(EscapeComponent)) {
                     e.followMe = true
                 }
+                entity.components.forEach((comp) => {
+                    comp.entity = null
+                    e.components.push(comp)
+                })
                 entities.push(e)
             }     
         })

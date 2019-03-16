@@ -7,13 +7,16 @@ export default class PatrolComponent extends Component {
     constructor(entity, map) {
         super(entity)
         this.rng = new Random()
-        this.map = map
-        this.targetTile = this.map.getTile(this.entity)
+        this.starting = true      
 
     }
 
     update() {
-        const currentTile = this.map.getTile(this.entity)
+        if (this.starting) {
+            this.targetTile = this.entity.game.sceneManager.currentScene.map.getTile(this.entity)
+            this.starting = false
+        }
+        const currentTile = this.entity.game.sceneManager.currentScene.map.getTile(this.entity)
         if (Map.checkSameTile(this.targetTile, currentTile)) {
             this.setPatrol()
         }
@@ -21,7 +24,7 @@ export default class PatrolComponent extends Component {
 
 
     getNewRoom() {
-        return this.map.getRoomCenter(this.map.getRandomRoom())
+        return this.entity.game.sceneManager.currentScene.map.getRoomCenter(this.entity.game.sceneManager.currentScene.map.getRandomRoom())
     }
 
     setPatrol() {

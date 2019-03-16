@@ -14,8 +14,14 @@ export default class SceneManager {
         this.collisionLayer = {}
         this.currentScene = {}
         this.saveState
-
-       
+        this.socket = io.connect('http://24.16.255.56:8888')
+        // console.log(this.socket)
+        
+        // this.socket.on('load', function (data) {
+        //     const saveState = data.data
+        //     console.log(saveState)
+        //     return saveState
+        // })
         // const express = require('express')
         // const app = express() 
         // const io = require('socket.io').listen(app.listen(port))
@@ -121,17 +127,32 @@ export default class SceneManager {
         saveState.name = this.currentScene.name + 'SAVE'
         saveState.map = this.currentScene.map.getMap()
         saveState.entities = this.currentScene.getEntities()
-        saveState.game = this.game
+        // saveState.game = this.game
         this.saveState = saveState
         this.currentScene.entities = []
+        console.log(saveState)
+        // saveState.map = 
+        this.socket.emit("save", {studentname: "Scott Robertson", statename: "gameState", data: saveState})
+        // console.log('saved')
         // this.currentScene.camera = null
+        
     }
 
     load() {
-        
-        const level = new LoadLevel(this.saveState)
-        
-        this.addScene = (level.name, level)
-        this.currentScene = level        
+        // var saveState
+        const game = this.game
+        this.socket.on('load', function (data) {
+            const saveState = data.data
+            if (saveState) {
+                const level = new LoadLevel(game, saveState)
+                this.addScene = (level.name, level)
+                this.currentScene = level    
+            }
+            console.log(saveState)
+        })
+        // console.log(this.socket.emit('load', { studentname: 'Scott Robertson', statename: 'gameState'}))
+        this.socket.emit('load', { studentname: 'Scott Robertson', statename: 'gameState'})
+
+    
     }
 }

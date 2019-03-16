@@ -8,9 +8,8 @@ import MageData from '../../entities/characters/MageDefaultData.js'
 import Camera from '../../entities/Camera.js';
 
 export default class LoadLevel extends Scene {
-    constructor(state) {
-        super(state.game)
-        const game = state.game
+    constructor(game, state) {
+        super(game)
         this.name = state.name
         const map = new Map(game, null, this, state.map)
         this.setMap(map)
@@ -28,6 +27,7 @@ export default class LoadLevel extends Scene {
             entity.UUID = e.UUID
             entity.states = e.states
             e.components.forEach((c) => {
+                c.entity = entity
                 entity.addComponent(c)
             })
             this.addEntity(entity)

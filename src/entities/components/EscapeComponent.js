@@ -9,23 +9,24 @@ export default class EscapeComponent extends Component {
         super(entity)
         this.knownEnemies = []
         this.knownRooms = []
-        this.map = map
         this.rng = new Random()
-        this.currentRoom = this.map.getRoomByTile(this.map.getTile(entity))
-        this.targetTile = this.map.getTile(this.entity)
+        this.starting = true
         this.foundEscape = false
         this.evading = false
         this.escaped = false
-
+       
     }
 
     // eslint-disable-next-line complexity
     update() {
-        const currentTile = this.map.getTile(this.entity)
+        const currentTile = this.entity.game.sceneManager.currentScene.map.getTile(this.entity)
         const nearEnemies = []
-
+        if (this.starting) {
+            this.targetTile = this.entity.game.sceneManager.currentScene.map.getTile(this.entity)
+            this.starting = false
+        }
         //Set the current room.
-        this.currentRoom = this.map.getRoomByTile(this.map.getTile(this.entity))
+        this.currentRoom = this.entity.game.sceneManager.currentScene.map.getRoomByTile(this.entity.game.sceneManager.currentScene.map.getTile(this.entity))
         //Check if arrived at destination.
         this.checkArrived(currentTile)
         //Add room to visited rooms.
@@ -84,13 +85,13 @@ export default class EscapeComponent extends Component {
     }
 
     checkIfExit() {
-        return this.map.getRoomByTile(this.map.getTile(entity)).tag === 'exit'
+        return this.entity.game.sceneManager.currentScene.map.getRoomByTile(this.entity.game.sceneManager.currentScene.map.getTile(entity)).tag === 'exit'
     }
 
     getNewRoom() {
-        let id = this.map.getRandomRoom()
+        let id = this.entity.game.sceneManager.currentScene.map.getRandomRoom()
         while (this.knownRooms.includes(id)) {
-            id = this.map.getRandomRoom()
+            id = this.entity.game.sceneManager.currentScene.map.getRandomRoom()
         }
         return id
     }
@@ -99,7 +100,7 @@ export default class EscapeComponent extends Component {
      * @param {Number} id 
      */
     goToRoom(id) {
-        this.targetTile = this.map.getRoomCenter(id)
+        this.targetTile = this.entity.game.sceneManager.currentScene.map.getRoomCenter(id)
         this.entity.getComponent(MovementComponent).setPathfindingTarget(this.targetTile)
     }
 

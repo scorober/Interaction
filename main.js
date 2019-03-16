@@ -4,30 +4,33 @@ import { ASSET_PATHS } from './src/utils/Const.js'
 
 const assetManager = new AssetManager()
 
-window.onload = function () {
-    const express = require('express')
-    const app = express()
+// // const socket = io.connect('http://24.16.255.56:8888')
+// // console.log(socket)
+// window.onload = function () {
 
-    const socket = io.connect('http://24.16.255.56:8888')
+    
+
+
   
-    socket.on('load', function (data) {
-        console.log(data)
-    })
+//     console.log('aldskfjaodlsjfo;pasijdfp')
+  
+//     socket.on('load', function (data) {
+//         console.log(data)
+//     })
   
   
-    saveButton.onclick = function () {
-        console.log('save')
-        text.innerHTML = 'Saved.'
-        socket.emit('save', { studentname: 'Chris Marriott', statename: 'aState', data: 'Goodbye World' })
-    }
+//     saveButton.onclick = function () {
+//         console.log('save')
+//         text.innerHTML = 'Saved.'
+//         socket.emit('save', { studentname: 'Chris Marriott', statename: 'aState', data: 'Goodbye World' })
+//     }
   
-    loadButton.onclick = function () {
-        console.log('load')
-        text.innerHTML = 'Loaded.'
-        socket.emit('load', { studentname: 'Chris Marriott', statename: 'aState' })
-    }
-  
-}
+//     loadButton.onclick = function () {
+//         console.log('load')
+//         text.innerHTML = 'Loaded.'
+//         socket.emit('load', { studentname: 'Chris Marriott', statename: 'aState' })
+//     }
+// }
   
 
 assetManager.downloadBulk(Object.values(ASSET_PATHS), function () {

@@ -48,7 +48,7 @@ export default {
         AnimationRates: {
             [AR.Walk]: 0.08,
             [AR.Stand]: 0.6,
-            [AR.Attack]: 0.15,
+            [AR.Shoot]: 0.15,
             [AR.Impact]: 0.1
         },
         AnimationData: {

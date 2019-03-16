@@ -28,7 +28,7 @@ export default class Map extends Entity {
             this.map2 = map.map2
             this.map3 = map.map3
             this.exits = map.exits
-            this.rooms = map.rooms
+            // this.rooms = map.rooms
             this.rows = map.rows
             this.cols = map.cols
         } else {
@@ -511,18 +511,21 @@ export default class Map extends Entity {
             const y0 = this.rooms[i].position[1]
             const y1 = y0 + this.rooms[i].size[1]
             if (tile.x >= x0 && tile.x <= x1 && tile.y >= y0 && tile.y <= y1) {
-                return this.rooms[i]
+                return {id: this.rooms[i].id, tag: this.rooms[i].tag }
             }
         }
     }
 
     getMap() {
+        this.rooms.forEach((room) => {
+            room.parent = null
+        })
         return  {
             map0: this.map0,
             map1: this.map1,
             map2: this.map2,
             map3: this.map3,
-            rooms: this.rooms,
+            // rooms: this.rooms,
             exits: this.exits,
             rows: this.rows,
             cols: this.cols
