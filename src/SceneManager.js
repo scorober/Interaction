@@ -62,11 +62,9 @@ export default class SceneManager {
     update() {
         this.currentScene.update()
         if (this.game.inputManager.downKeys[KEYS.KeyS]) {
-            console.log('saved')
             this.game.sceneManager.save()
         }
         if (this.game.inputManager.downKeys[KEYS.KeyL]) {
-            console.log('load')
             this.game.sceneManager.load()
         }
         if (this.game.inputManager.downKeys[KEYS.KeyC]) {
@@ -131,7 +129,7 @@ export default class SceneManager {
         // saveState.game = this.game
         this.saveState = saveState
         this.currentScene.entities = []
-        console.log(saveState)
+        console.log('saving...', saveState)
         // saveState.map = 
         this.socket.emit("save", {studentname: "Scott Robertson", statename: "gameState", data: saveState})
         // console.log('saved')
@@ -145,12 +143,12 @@ export default class SceneManager {
         const self = this
         this.socket.on('load', function (data) {
             const saveState = data.data
-            if (saveState) {
-                const level = new LoadLevel(game, saveState)
-                self.addScene = (level.name, level)
-                self.currentScene = level    
-            }
-            console.log(saveState)
+            // if (saveState) {
+            //     const level = new LoadLevel(game, saveState)
+            //     self.addScene = (level.name, level)
+            //     self.currentScene = level    
+            // }
+            console.log('loading...', saveState)
         })
         this.socket.emit('load', { studentname: 'Scott Robertson', statename: 'gameState'})
         console.log(this.currentScene)
