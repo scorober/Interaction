@@ -1,6 +1,6 @@
 import Entity from '../entities/Entity.js'
 import Array2D from '../utils/Array2d.js'
-import { MAP_ITEMS as MI, ROOMS, RIGHT, LEFT, TOP, BOTTOM, TILE_COLLISION as TC, STATES } from '../utils/Const.js'
+import { ASSET_PATHS, MAP_ITEMS as MI, ROOMS, RIGHT, LEFT, TOP, BOTTOM, TILE_COLLISION as TC, STATES } from '../utils/Const.js'
 import Vector from '../utils/Vector.js'
 import Random from '../utils/Random.js'
 
@@ -13,21 +13,29 @@ export default class Map extends Entity {
      * @param setLength Number of tiles wide
      * @param tiles  a reference to the tile array map thing
      */
-    constructor(game, tileAtlas, tileSize, setLength, dungeon, scene) {
+    constructor(game, dungeon, scene, map) {
         super(game, 0, 0)
-        this.tileAtlas = tileAtlas
-        this.tileSize = tileSize
-        this.setLength = setLength
-        this.dungeon = dungeon
-        this.rows = dungeon.size[1]
-        this.cols = dungeon.size[0]
-        this.tiles = []
-        this.scene = scene
-        this.exits = [] //Array of door positions and room they enter.
-        this.rooms = []
-        this.safeRooms = []
+        this.tileAtlas = game.getAsset(ASSET_PATHS.Dungeon)
+        this.tileSize = 64
+        this.setLength = 16
         this.rng = new Random()
-        this.buildMap()
+        this.scene = scene
+        if (map) {
+            this.map0 = map.map0
+            this.map1 = map.map1
+            this.map2 = map.map2
+            this.map3 = map.map3
+            this.exits = map.exits
+            this.rooms = map.rooms
+        } else {
+            this.dungeon = dungeon
+            this.rows = dungeon.size[1]
+            this.cols = dungeon.size[0]
+            this.exits = [] //Array of door positions and room they enter.
+            this.rooms = []
+            this.buildMap()
+        }
+
     }
 
     getStartPos() {
@@ -400,8 +408,8 @@ export default class Map extends Entity {
                 Math.floor((tile - 1) / this.setLength) * this.tileSize,
                 this.tileSize,
                 this.tileSize,
-                tileX - this.tileSize / 2, //Placement on canvas
-                tileY - this.tileSize / 2,
+                Math.floor(tileX - this.tileSize / 2), //Placement on canvas
+                Math.floor(tileY - this.tileSize / 2),
                 this.tileSize,
                 this.tileSize
             )
@@ -479,7 +487,6 @@ export default class Map extends Entity {
      */
     static checkSameTile(tile0, tile1) {
         return tile0.x === tile1.x && tile0.y === tile1.y
-
     }
 
 
@@ -497,6 +504,18 @@ export default class Map extends Entity {
             if (tile.x >= x0 && tile.x <= x1 && tile.y >= y0 && tile.y <= y1) {
                 return this.rooms[i]
             }
+        }
+    }
+
+    getMap() {
+        return  {
+            map0: this.map0,
+            map1: this.map1,
+            map2: this.map2,
+            map3: this.map3,
+            rooms: this.rooms,
+            exits: this.exits
+
         }
     }
 

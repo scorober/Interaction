@@ -95,4 +95,12 @@ export default class SceneManager {
         }
         return ret
     }
+
+    save() {
+
+    }
+
+    load() {
+        
+    }
 }

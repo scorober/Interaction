@@ -1,5 +1,5 @@
 {
-  "name": "drmarriott",
+  "name": "interaction",
   "version": "1.0.0",
   "description": "# Set up Set up instructions",
   "main": "main.js",
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/scorober/Interaction.git"
   },
-  "author": "",
+  "author": "Scott R",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Evigold/The-Untitled-Adventures/issues"
@@ -18,5 +18,12 @@
   "homepage": "https://github.com/Evigold/The-Untitled-Adventures#readme",
   "devDependencies": {
     "eslint": "^5.12.1"
+  },
+  "keywords": [
+    "interaction"
+  ],
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
   }
 }

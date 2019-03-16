@@ -1,22 +1,12 @@
 import Scene from './Scene.js'
 import Map from '../Map.js'
 import Dungeon from '../generators/Dungeon.js'
-import Background from '../Background.js'
 import Entity from '../../entities/Entity.js'
-import { ASSET_PATHS } from '../../utils/Const.js'
-
-import PlayerCharacterData from '../../entities/characters/PlayerCharacterDefaultData.js'
-import ArcherData from '../../entities/characters/ArcherDefaultData.js'
 import RobotData from '../../entities/characters/RobotDefaultData.js'
-
 import MovementComponent from '../../entities/components/MovementComponent.js'
-import PlayerInputComponent from '../../entities/components/PlayerInputComponent.js'
 import AnimationComponent from '../../entities/components/AnimationComponent.js'
 import CollisionComponent from '../../entities/components/CollisionComponent.js'
 import AttributeComponent from '../../entities/components/AttributeComponent.js'
-import CombatComponent from '../../entities/components/CombatComponent.js'
-import EnemyInteractionComponent from '../../entities/components/InteractionComponent/EnemyInteractionComponent.js'
-import Vector from '../../utils/Vector.js'
 import PatrolComponent from '../../entities/components/PatrolComponent.js'
 import MageData from '../../entities/characters/MageDefaultData.js'
 import EscapeComponent from '../../entities/components/EscapeComponent.js'
@@ -58,21 +48,13 @@ export default class FirstLevel extends Scene {
         })
 
         dungeon.generate()
-        // dungeon.print()
 
-        const map = new Map(game, game.getAsset(ASSET_PATHS.Dungeon), 64, 16, dungeon, this)
+        const map = new Map(game, dungeon, this)
         this.setMap(map)
-        this.setBackground(new Background(game, game.getAsset(ASSET_PATHS.Background)))
         const start = this.map.getStartPos()
 
-        const playerCharacter = this.createPlayerCharacter(game, start)
-        // const archer = this.createArcher(game, start, playerCharacter)
-
-        this.setPlayer(playerCharacter)
-        this.addEntity(playerCharacter)
-        // this.addEntity(archer)
         this.addEntity(game.camera)
-        this.game.camera.setFollowedEntity(playerCharacter)
+
 
         for (let i = 0; i < 10; i++) {
             const robot = this.createRobotPatroller(game, map)
@@ -81,7 +63,7 @@ export default class FirstLevel extends Scene {
 
         const mage = this.createEscapeArtist(game, start, map)
         this.addEntity(mage)
-
+        this.game.camera.setFollowedEntity(mage)
 
     }
 
@@ -91,8 +73,6 @@ export default class FirstLevel extends Scene {
         mage.addComponent(new MovementComponent(mage, MageData.Attributes))
         mage.addComponent(new AttributeComponent(mage, MageData.Attributes))
         mage.addComponent(new CollisionComponent(mage, MageData.Attributes))
-        mage.addComponent(new EnemyInteractionComponent(mage))
-        mage.addComponent(new CombatComponent(mage))
         mage.addComponent(new EscapeComponent(mage, map))
         return mage
     }
@@ -104,33 +84,8 @@ export default class FirstLevel extends Scene {
         robot.addComponent(new MovementComponent(robot, RobotData.Attributes))
         robot.addComponent(new AttributeComponent(robot, RobotData.Attributes))
         robot.addComponent(new CollisionComponent(robot))
-        robot.addComponent(new EnemyInteractionComponent(robot))
-        robot.addComponent(new CombatComponent(robot))
         robot.addComponent(new PatrolComponent(robot, map))
         return robot
-    }
-
-    createArcher(game, start, playerCharacter) {
-        const archer = new Entity(game, start, ArcherData.Attributes)
-        archer.addComponent(new AnimationComponent(archer, ArcherData.AnimationConfig))
-        archer.addComponent(new MovementComponent(archer, ArcherData.Attributes))
-        archer.addComponent(new AttributeComponent(archer, ArcherData.Attributes))
-        archer.addComponent(new CollisionComponent(archer))
-        archer.addComponent(new EnemyInteractionComponent(archer))
-        archer.addComponent(new CombatComponent(archer))
-        archer.getComponent(MovementComponent).setFollowTarget(playerCharacter)
-        return archer
-    }
-
-    createPlayerCharacter(game, start) {
-        const pc = new Entity(game, start, PlayerCharacterData.Attributes)
-        pc.addComponent(new AnimationComponent(pc, PlayerCharacterData.AnimationConfig))
-        pc.addComponent(new AttributeComponent(pc, PlayerCharacterData.Attributes))
-        pc.addComponent(new MovementComponent(pc, PlayerCharacterData.Attributes))
-        pc.addComponent(new CollisionComponent(pc))
-        pc.addComponent(new CombatComponent(pc))
-        pc.addComponent(new PlayerInputComponent(pc))
-        return pc
     }
 
     /**
