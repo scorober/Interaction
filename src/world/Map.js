@@ -28,7 +28,7 @@ export default class Map extends Entity {
             this.map2 = map.map2
             this.map3 = map.map3
             this.exits = map.exits
-            // this.rooms = map.rooms
+            this.rooms = map.rooms
             this.rows = map.rows
             this.cols = map.cols
         } else {
@@ -77,7 +77,15 @@ export default class Map extends Entity {
             }
             // this.removeAllExits()
             // this.openRoomExits(1)
-            this.rooms.push(piece)
+            // this.rooms.push(piece)
+            this.rooms.push(
+                {
+                    position: piece.position,
+                    size: piece.size,
+                    center: piece.global_pos(piece.get_center_pos()),
+                    tag: piece.tag,
+                }
+            )
         }
     }
 
@@ -475,8 +483,8 @@ export default class Map extends Entity {
     getRoomCenter(id) {
         const room = this.getRoom(id)
         return new Vector(
-            room.global_pos(room.get_center_pos())[0],
-            room.global_pos(room.get_center_pos())[1]
+            room.center[0],
+            room.center[1]
         )
        
     }
@@ -517,15 +525,15 @@ export default class Map extends Entity {
     }
 
     getMap() {
-        this.rooms.forEach((room) => {
-            room.parent = null
-        })
+        // this.rooms.forEach((room) => {
+        //     room.parent = null
+        // })
         return  {
             map0: this.map0,
             map1: this.map1,
             map2: this.map2,
             map3: this.map3,
-            // rooms: this.rooms,
+            rooms: this.rooms,
             exits: this.exits,
             rows: this.rows,
             cols: this.cols

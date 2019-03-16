@@ -153,6 +153,11 @@ export default class SceneManager {
         this.socket.emit('load', { studentname: 'Scott Robertson', statename: 'gameState'})
         console.log(this.currentScene)
 
+        console.log('loaded from browswer still... trouble building off returned object...')
+        const level = new LoadLevel(game, this.saveState)
+        this.addScene = (level.name, level)
+        this.currentScene = level    
+
     
     }
 }
