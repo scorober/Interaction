@@ -1,7 +1,7 @@
 import Component from './Component.js'
 import AnimationFactory from '../../AnimationFactory.js'
 import { DIRECTIONS } from '../../utils/Const.js'
-import CollisionComponent from './CollisionComponent.js'
+
 
 export default class AnimationComponent extends Component {
     /**
@@ -74,10 +74,6 @@ export default class AnimationComponent extends Component {
     setAnimation(animation, cb = null) {
         this.animation = animation
         if (this.animations[animation].loop === false) this.animations[animation].elapsedTime = 0
-        const collisionComponent = this.entity.getComponent(CollisionComponent)
-        if (collisionComponent) {
-            collisionComponent.setCollidableHitbox()
-        }
         this.animations[animation].setCallback(cb)
     }
 

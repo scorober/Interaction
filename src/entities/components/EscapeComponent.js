@@ -15,6 +15,7 @@ export default class EscapeComponent extends Component {
         this.targetTile = this.map.getTile(this.entity)
         this.foundEscape = false
         this.evading = false
+        this.escaped = false
 
     }
 
@@ -30,7 +31,7 @@ export default class EscapeComponent extends Component {
         //Add room to visited rooms.
         this.checkRoomVisited()
         //Check if this is the exit. If so stop searching for rooms and head to center.
-        if (this.currentRoom.tag === 'exit') {
+        if (this.currentRoom.tag === 'exit'  && this.escaped === false) {
             if (this.foundEscape === false) {
                 this.foundEscape = true
                 this.goToRoom(this.currentRoom.id)
@@ -49,7 +50,6 @@ export default class EscapeComponent extends Component {
                     mobVectors.push(mv1.subtract(mv0))
                 }
             }
-            this.handleEvasion(mobVectors)
         }
 
 
@@ -59,16 +59,13 @@ export default class EscapeComponent extends Component {
         } else {
             this.evading = false
         }
-
     }
 
-    handleEvasion(vectors) {
-        
-    }
 
     checkArrived(currentTile) {
         if (Map.checkSameTile(this.targetTile, currentTile)) {
             if (this.foundEscape) {
+                this.escaped = true
                 console.log('escaped!!!')
             } else {
                 this.goToRoom(this.getNewRoom())

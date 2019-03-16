@@ -3,7 +3,9 @@
  */
 import FirstLevel from './world/scenes/FirstLevel.js'
 import { HitCircle, CollisionLayer } from './utils/Collision.js'
-import CollisionComponent from './entities/components/CollisionComponent.js'
+import LoadLevel from './world/scenes/LoadLevel.js'
+import Camera from './entities/Camera.js'
+import { KEYS } from './utils/Const.js'
 
 export default class SceneManager {
 
@@ -13,6 +15,7 @@ export default class SceneManager {
         this.scenes = []
         this.collisionLayer = {}
         this.currentScene = {}
+        this.saveState
     }
     init(game) {
         this.game = game
@@ -46,6 +49,17 @@ export default class SceneManager {
      */
     update() {
         this.currentScene.update()
+        if (this.game.inputManager.downKeys[KEYS.KeyS]) {
+            console.log('saved')
+            this.game.sceneManager.save()
+        }
+        if (this.game.inputManager.downKeys[KEYS.KeyL]) {
+            console.log('load')
+            this.game.sceneManager.load()
+        }
+        if (this.game.inputManager.downKeys[KEYS.KeyC]) {
+            console.log(this.game.camera)
+        }
     }
 
     /**
@@ -97,10 +111,29 @@ export default class SceneManager {
     }
 
     save() {
-
+        const saveState = {}
+        saveState.name = this.currentScene.name + 'SAVE'
+        saveState.map = this.currentScene.map.getMap()
+        saveState.entities = this.currentScene.getEntities()
+        saveState.game = this.game
+        this.saveState = saveState
     }
 
     load() {
+        const level = new LoadLevel(this.saveState)
+        this.addScene = (level.name, level)
+        this.currentScene = level
+
+        // const level = new FirstLevel(this.game)
+        // this.currentScene = level
+
+
+        // this.currentScene = first
+        // this.game.camera = new Camera(this.game)
+        // console.log(this.game)
+        // level.addEntity(this.game.camera)
+        // this.game.camera.setFollowedEntity(this.currentScene.entities[2])
+        // console.log(level)
         
     }
 }

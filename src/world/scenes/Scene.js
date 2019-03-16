@@ -1,4 +1,6 @@
 import Vector from '../../utils/Vector.js'
+import EscapeComponent from '../../entities/components/EscapeComponent.js';
+
 /**
  * Basic scene object most other scenes will extend.
  */
@@ -22,7 +24,6 @@ export default class Scene {
      * Currently just updates a timer that tracks how long the current scene is active.
      */
     update() {
-
         this.timeElapsed += this.game.clockTick
     }
     draw() { }
@@ -40,6 +41,10 @@ export default class Scene {
      */
     addEntity(entity) {
         this.entities.push(entity)
+    }
+
+    addEntities(entities) {
+        this.entities.concat(entities)
     }
 
     /**
@@ -124,7 +129,28 @@ export default class Scene {
                 
             }
         }
+    }
 
+
+    getEntities() {
+        const entities = []
+        console.log(this.entities)
+        this.entities.forEach((entity) => {
+            if (!entity.xView) {
+                const e = {
+                    x: entity.x,
+                    y: entity.y,
+                    removeFromWorld: entity.removeFromWorld,
+                    states: entity.states,
+                    components: entity.components
+                }
+                if (entity.getComponent(EscapeComponent)) {
+                    e.followMe = true
+                }
+                entities.push(e)
+            }     
+        })
+        return entities
     }
 
     /**

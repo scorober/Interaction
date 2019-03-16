@@ -5,11 +5,10 @@ import Entity from '../../entities/Entity.js'
 import RobotData from '../../entities/characters/RobotDefaultData.js'
 import MovementComponent from '../../entities/components/MovementComponent.js'
 import AnimationComponent from '../../entities/components/AnimationComponent.js'
-import CollisionComponent from '../../entities/components/CollisionComponent.js'
-import AttributeComponent from '../../entities/components/AttributeComponent.js'
 import PatrolComponent from '../../entities/components/PatrolComponent.js'
 import MageData from '../../entities/characters/MageDefaultData.js'
 import EscapeComponent from '../../entities/components/EscapeComponent.js'
+import { KEYS } from '../../utils/Const.js'
 
 export default class FirstLevel extends Scene {
     constructor(game) {
@@ -55,7 +54,6 @@ export default class FirstLevel extends Scene {
 
         this.addEntity(game.camera)
 
-
         for (let i = 0; i < 10; i++) {
             const robot = this.createRobotPatroller(game, map)
             this.addEntity(robot)
@@ -64,15 +62,12 @@ export default class FirstLevel extends Scene {
         const mage = this.createEscapeArtist(game, start, map)
         this.addEntity(mage)
         this.game.camera.setFollowedEntity(mage)
-
     }
 
     createEscapeArtist(game, start, map) {
         const mage = new Entity(game, start)
         mage.addComponent(new AnimationComponent(mage, MageData.AnimationConfig))
         mage.addComponent(new MovementComponent(mage, MageData.Attributes))
-        mage.addComponent(new AttributeComponent(mage, MageData.Attributes))
-        mage.addComponent(new CollisionComponent(mage, MageData.Attributes))
         mage.addComponent(new EscapeComponent(mage, map))
         return mage
     }
@@ -82,8 +77,6 @@ export default class FirstLevel extends Scene {
         const robot = new Entity(game, pos)
         robot.addComponent(new AnimationComponent(robot, RobotData.AnimationConfig))
         robot.addComponent(new MovementComponent(robot, RobotData.Attributes))
-        robot.addComponent(new AttributeComponent(robot, RobotData.Attributes))
-        robot.addComponent(new CollisionComponent(robot))
         robot.addComponent(new PatrolComponent(robot, map))
         return robot
     }
@@ -96,6 +89,7 @@ export default class FirstLevel extends Scene {
         //here to reduce confusion, and to allow the order they are updated/rendered to be adjusted.
         this.updateMap()
         this.updateEntities()
+
     }
 
     /**

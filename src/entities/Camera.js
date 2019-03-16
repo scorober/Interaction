@@ -6,10 +6,12 @@ export default class Camera extends Entity {
         super(game, new Vector(0, 0))
         this.xView = 0
         this.yView = 0
+        
     }
 
     setFollowedEntity(followedEntity) {
         this.followedEntity = followedEntity
+        console.log(this.followedEntity)
     }
 
     follow() {
@@ -21,6 +23,7 @@ export default class Camera extends Entity {
         if (this.followedEntity) {
             this.follow(this.followedEntity)
         }
+ 
     }
 
     draw() {

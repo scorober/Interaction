@@ -10,8 +10,6 @@ export default class Entity {
         this.states = this.getDefaultStates()
         this.components = []
         this.UUID = create_UUID()
-        this.hitOffsetX = 0
-        this.hitOffsetY = 0
     }
 
     /**

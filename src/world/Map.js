@@ -15,6 +15,8 @@ export default class Map extends Entity {
      */
     constructor(game, dungeon, scene, map) {
         super(game, 0, 0)
+        this.x = 0
+        this.y = 0
         this.tileAtlas = game.getAsset(ASSET_PATHS.Dungeon)
         this.tileSize = 64
         this.setLength = 16
@@ -27,6 +29,8 @@ export default class Map extends Entity {
             this.map3 = map.map3
             this.exits = map.exits
             this.rooms = map.rooms
+            this.rows = map.rows
+            this.cols = map.cols
         } else {
             this.dungeon = dungeon
             this.rows = dungeon.size[1]
@@ -35,7 +39,8 @@ export default class Map extends Entity {
             this.rooms = []
             this.buildMap()
         }
-
+        console.log(this)
+        this.count = 0
     }
 
     getStartPos() {
@@ -364,6 +369,10 @@ export default class Map extends Entity {
     update() { }
 
     draw() {
+        this.count++
+        if (Math.floor(this.count % 100) === 0) {
+            console.log(this.game.camera)
+        }
         for (let c = 0; c < this.cols; c++) {
             for (let r = 0; r < this.rows; r++) {
                 const tile = this.map0.get([c, r])
@@ -392,6 +401,7 @@ export default class Map extends Entity {
      * @param {*} tile Tile being drawn
      */
     drawTile(c, r, tile) {
+        
         const cam = this.game.camera
         const width = this.game.ctx.canvas.width
         const height = this.game.ctx.canvas.height
@@ -400,8 +410,8 @@ export default class Map extends Entity {
         const tilesTall = Math.ceil(height / this.tileSize)
         const tileInView = this.tileInView(c, r, centerTile, tilesWide + 2, tilesTall + 2)
         if (tile && tileInView) {
-            const tileX = c * this.tileSize - this.game.camera.xView
-            const tileY = r * this.tileSize - this.game.camera.yView
+            const tileX = c * this.tileSize - cam.xView
+            const tileY = r * this.tileSize - cam.yView
             this.game.ctx.drawImage(
                 this.tileAtlas,
                 ((tile - 1) % this.setLength * this.tileSize),
@@ -514,7 +524,9 @@ export default class Map extends Entity {
             map2: this.map2,
             map3: this.map3,
             rooms: this.rooms,
-            exits: this.exits
+            exits: this.exits,
+            rows: this.rows,
+            cols: this.cols
 
         }
     }
