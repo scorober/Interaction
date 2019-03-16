@@ -1,5 +1,6 @@
 import Vector from '../../utils/Vector.js'
-import EscapeComponent from '../../entities/components/EscapeComponent.js';
+import EscapeComponent from '../../entities/components/EscapeComponent.js'
+import Camera from '../../entities/Camera.js'
 
 /**
  * Basic scene object most other scenes will extend.
@@ -14,9 +15,16 @@ export default class Scene {
         this.highlightedEntity = {}
         this.timeElapsed = 0
         this.timeBuffer = 0
-
         this.pacified = true
         this.swarm = false
+        this.camera = null
+    }
+
+    setCamera(entity) {
+        this.camera = new Camera(this.game)
+        this.camera.setFollowedEntity(entity)
+        // console.log(this.camera)
+        this.addEntity(this.camera)
     }
 
     /**
@@ -134,10 +142,10 @@ export default class Scene {
 
     getEntities() {
         const entities = []
-        console.log(this.entities)
         this.entities.forEach((entity) => {
             if (!entity.xView) {
                 const e = {
+                    UUID: entity.UUID,
                     x: entity.x,
                     y: entity.y,
                     removeFromWorld: entity.removeFromWorld,

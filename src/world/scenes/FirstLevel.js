@@ -52,8 +52,6 @@ export default class FirstLevel extends Scene {
         this.setMap(map)
         const start = this.map.getStartPos()
 
-        this.addEntity(game.camera)
-
         for (let i = 0; i < 10; i++) {
             const robot = this.createRobotPatroller(game, map)
             this.addEntity(robot)
@@ -61,7 +59,7 @@ export default class FirstLevel extends Scene {
 
         const mage = this.createEscapeArtist(game, start, map)
         this.addEntity(mage)
-        this.game.camera.setFollowedEntity(mage)
+        this.setCamera(mage)
     }
 
     createEscapeArtist(game, start, map) {

@@ -8,14 +8,20 @@ import Camera from './entities/Camera.js'
 import { KEYS } from './utils/Const.js'
 
 export default class SceneManager {
-
-
     constructor() {
         this.game = {}
         this.scenes = []
         this.collisionLayer = {}
         this.currentScene = {}
         this.saveState
+
+       
+        // const express = require('express')
+        // const app = express() 
+        // const io = require('socket.io').listen(app.listen(port))
+
+
+
     }
     init(game) {
         this.game = game
@@ -117,23 +123,15 @@ export default class SceneManager {
         saveState.entities = this.currentScene.getEntities()
         saveState.game = this.game
         this.saveState = saveState
+        this.currentScene.entities = []
+        // this.currentScene.camera = null
     }
 
     load() {
-        const level = new LoadLevel(this.saveState)
-        this.addScene = (level.name, level)
-        this.currentScene = level
-
-        // const level = new FirstLevel(this.game)
-        // this.currentScene = level
-
-
-        // this.currentScene = first
-        // this.game.camera = new Camera(this.game)
-        // console.log(this.game)
-        // level.addEntity(this.game.camera)
-        // this.game.camera.setFollowedEntity(this.currentScene.entities[2])
-        // console.log(level)
         
+        const level = new LoadLevel(this.saveState)
+        
+        this.addScene = (level.name, level)
+        this.currentScene = level        
     }
 }

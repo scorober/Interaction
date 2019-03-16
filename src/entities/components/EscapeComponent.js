@@ -22,7 +22,7 @@ export default class EscapeComponent extends Component {
     // eslint-disable-next-line complexity
     update() {
         const currentTile = this.map.getTile(this.entity)
-        const nearEnemies = this.entity.game.sceneManager.currentScene.getNearbyEnemies(this.entity, 250)
+        const nearEnemies = []
 
         //Set the current room.
         this.currentRoom = this.map.getRoomByTile(this.map.getTile(this.entity))

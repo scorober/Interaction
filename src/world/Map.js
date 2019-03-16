@@ -39,7 +39,6 @@ export default class Map extends Entity {
             this.rooms = []
             this.buildMap()
         }
-        console.log(this)
         this.count = 0
     }
 
@@ -371,7 +370,7 @@ export default class Map extends Entity {
     draw() {
         this.count++
         if (Math.floor(this.count % 100) === 0) {
-            console.log(this.game.camera)
+            console.log(this.scene.camera)
         }
         for (let c = 0; c < this.cols; c++) {
             for (let r = 0; r < this.rows; r++) {
@@ -402,7 +401,7 @@ export default class Map extends Entity {
      */
     drawTile(c, r, tile) {
         
-        const cam = this.game.camera
+        const cam = this.game.sceneManager.currentScene.camera
         const width = this.game.ctx.canvas.width
         const height = this.game.ctx.canvas.height
         const centerTile = Map.worldToTilePosition(new Vector(cam.xView + width / 2, cam.yView + height / 2), this.tileSize)

@@ -16,6 +16,7 @@ export default class Animation {
 
     drawFrame(game, x, y, angle) {
         if (this.draw) {
+            const cam = game.sceneManager.currentScene.camera
             this.elapsedTime += game.clockTick
             if (this.isDone()) {
                 if (this.cbCalled === false && this.cb) {
@@ -60,7 +61,7 @@ export default class Animation {
             offscreenCtx.drawImage(thirdCanvas, - (this.frameWidth * this.scale / 2), - (this.frameHeight * this.scale / 2))
             offscreenCtx.restore()
             thirdCtx.clearRect(0,0, size, size)
-            game.ctx.drawImage(offscreenCanvas,  (x - (this.frameWidth * this.scale / 2)) - game.camera.xView,(y - (this.frameHeight * this.scale)) + this.yOffset - game.camera.yView)
+            game.ctx.drawImage(offscreenCanvas,  (x - (this.frameWidth * this.scale / 2)) - cam.xView,(y - (this.frameHeight * this.scale)) + this.yOffset - cam.yView)
 
         }
         

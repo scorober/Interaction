@@ -14,30 +14,24 @@ export default class LoadLevel extends Scene {
         this.name = state.name
         const map = new Map(game, null, this, state.map)
         this.setMap(map)
-        const mage = this.createEntities(game, state.entities)
+        this.createEntities(game, state.entities)
+        this.findMage()
+        console.log(this.entities)
 
     }
 
     createEntities(game, entities) {
-        var mage
         for (let i = 0; i < entities.length; i++) {
             const e = entities[i]
             const entity = new Entity(game, { x: e.x, y: e.y })
             entity.removeFromWorld = e.removeFromWorld
+            entity.UUID = e.UUID
             entity.states = e.states
             e.components.forEach((c) => {
                 entity.addComponent(c)
             })
-            this.entities.push(entity)
-            if (e.followMe) {
-                const cam = new Camera(game)
-                this.game.camera = cam
-                this.game.camera.setFollowedEntity(entity)
-                this.entities.push(cam)
-            }
-            
+            this.addEntity(entity)
         }
-        return mage
     }
     createEscapeArtist(game, start, map) {
         const mage = new Entity(game, start)
@@ -45,6 +39,18 @@ export default class LoadLevel extends Scene {
         mage.addComponent(new MovementComponent(mage, MageData.Attributes))
         mage.addComponent(new EscapeComponent(mage, map))
         return mage
+    }
+
+    findMage() {
+        console.log(this.entities.length)
+        for (let i = 0; i < this.entities.length; i++) {
+            const e = this.entities[i]
+            if (e.getComponent(EscapeComponent)) {
+                this.setCamera(e)
+
+            }
+        }
+        console.log(this.entities.length)
     }
 
     /**

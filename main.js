@@ -5,7 +5,8 @@ import { ASSET_PATHS } from './src/utils/Const.js'
 const assetManager = new AssetManager()
 
 window.onload = function () {
-    
+    const express = require('express')
+    const app = express()
 
     const socket = io.connect('http://24.16.255.56:8888')
   
@@ -13,9 +14,6 @@ window.onload = function () {
         console.log(data)
     })
   
-    const text = document.getElementById('text')
-    const saveButton = document.getElementById('save')
-    const loadButton = document.getElementById('load')
   
     saveButton.onclick = function () {
         console.log('save')
